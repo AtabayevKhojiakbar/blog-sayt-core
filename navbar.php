@@ -6,7 +6,7 @@
     </button>
     <div class="container">
         <!-- Begin Logo -->
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="index.php">
             <img src="assets/img/logo.png" alt="logo">
         </a>
         <!-- End Logo -->
@@ -14,13 +14,13 @@
             <!-- Begin Menu -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Stories <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Stories <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="post.html">Post</a>
+                    <a class="nav-link" href="login/login.php">Add Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="author.html">Author</a>
+                    <a class="nav-link" href="author.php">Author</a>
                 </li>
             </ul>
             <!-- End Menu -->
