@@ -19,9 +19,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="login/login.php">Add Post</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="author.php">Author</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="author.php">Author</a>-->
+<!--                </li>-->
             </ul>
             <!-- End Menu -->
             <!-- Begin Search -->

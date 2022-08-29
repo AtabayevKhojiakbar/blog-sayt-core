@@ -16,10 +16,6 @@ if(isset($_GET['id'])){
             $m=$i+2;
         }
     }
-//    echo "<pre>";
-//    print_r($text);
-//    echo "</pre>";
-//    echo strlen("Holy grail funding non-disclosure agreement advisor ramen bootstrapping ecosystem. Beta crowdfunding iteration assets business plan paradigm shift stealth mass market seed money rockstar niche market marketing buzz market.");
 }
 ?>
 
@@ -97,10 +93,10 @@ if(isset($_GET['id'])){
                 <!-- Begin Top Meta -->
                 <div class="row post-top-meta">
                     <div class="col-md-2">
-                        <a href="author.php"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
+                        <a href="#"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
                     </div>
                     <div class="col-md-10">
-                        <a class="link-dark" href="author.php"><?=$array['name'];?></a><a href="#" class="btn follow">Follow</a><br>
+                        <a class="link-dark" href="#"><?=$array['name'];?></a><a href="#" class="btn follow">Follow</a><br>
 <!--                 Begin       about  =============================-->
                         <span class="author-description"><?php echo $array['about'] ?></span><br>
 <!--                 End        about================================-->
@@ -127,17 +123,6 @@ if(isset($_GET['id'])){
             </div>
             <!-- End Post Content -->
 
-            <!-- Begin Tags -->
-<!--            <div class="after-post-tags">-->
-<!--                <ul class="tags">-->
-<!--                    <li><a href="#">Design</a></li>-->
-<!--                    <li><a href="#">Growth Mindset</a></li>-->
-<!--                    <li><a href="#">Productivity</a></li>-->
-<!--                    <li><a href="#">Personal Growth</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-            <!-- End Tags -->
-
         </div>
         <!-- End Post -->
 
@@ -148,6 +133,20 @@ if(isset($_GET['id'])){
 
 <div class="hideshare"></div>
 
+<?php
+//    $sql = "select id from posts;";
+//    $result = mysqli_query($connect, $sql);
+//    $mas = [];
+//    $array=[];
+//    while ($row = mysqli_fetch_assoc($result)){
+//        $mas[]=$row['id'];
+//    }
+//    for($i=1;$i<7;$i++){
+//        $array[]=$mas[rand(0,count($mas))];
+//    }
+//    var_dump($array);
+?>
+
 <!-- Begin Related
 ================================================== -->
 <div class="graybg">
@@ -155,21 +154,32 @@ if(isset($_GET['id'])){
         <div class="row listrecent listrelated">
 
             <!-- begin post -->
+
+        <?php
+        $sql = "select posts.id, posts.title, posts.text, posts.user_id, posts.img, posts.created_at, posts.view, users.name, users.about from posts inner join users on posts.user_id=users.id where posts.id<>'$id' limit 6;";
+        $result = mysqli_query($connect, $sql);
+        $asr=[];
+        while ($ss = mysqli_fetch_assoc($result)){
+            $asr[]=$ss;
+        }
+        shuffle($asr);
+        foreach ($asr as $rows){
+        ?>
             <div class="col-md-4">
                 <div class="card">
-                    <a href="single.php?id=6">
-                        <img class="img-fluid img-thumb" src="assets/img/demopic/9.jpg" alt="">
+                    <a href="single.php?id=<?=$rows['id']?>">
+                        <img class="img-fluid img-thumb" src="<?=$rows['img']?>" alt="">
                     </a>
                     <div class="card-block">
-                        <h2 class="card-title"><a href="?id=6">Best recreational places to visit on a holiday</a></h2>
+                        <h2 class="card-title"><a href="single.php?id=<?=$rows['id']?>"><?=$rows['title']?></a></h2>
                         <div class="metafooter">
                             <div class="wrapfooter">
 								<span class="meta-footer-thumb">
-								<a href="author.php"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
+								<a href="#"><img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"></a>
 								</span>
                                 <span class="author-meta">
-								<span class="post-name"><a href="author.php">Sal</a></span><br/>
-								<span class="post-date">22 July 2017</span><span class="dot"></span><span class="post-read">6 min read</span>
+								<span class="post-name"><a href="#"><?=$rows['name']?></a></span><br/>
+								<span class="post-date"><?=$rows['created_at']?></span><span class="dot"></span><span class="post-read">6 min read</span>
 								</span>
                                 <span class="post-read-more"><a href="#" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
                             </div>
@@ -177,6 +187,8 @@ if(isset($_GET['id'])){
                     </div>
                 </div>
             </div>
+        <?php  } ?>
+
             <!-- end post -->
 
         </div>
@@ -201,7 +213,15 @@ if(isset($_GET['id'])){
 <?php include "footer.php" ?>
 <!-- End Footer
 ================================================== -->
-
+<!--<h1>-->
+<!--    --><?php
+//    $numbers = range(1, 20);
+//    shuffle($numbers);
+//    echo "<pre>";
+//    print_r($numbers);
+//    echo "</pre>";
+//    ?>
+<!--</h1>-->
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
