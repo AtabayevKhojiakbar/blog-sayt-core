@@ -1,12 +1,13 @@
 <?php
     include "../connect.php";
+    session_start();
     $bool=true;
     if(isset($_GET['a'])){
         $bool=false;
     }
     if(isset($_POST['submit'])){
         $user = $_POST['username'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
         $sql = "select * from users where name='$user';";
         $result = mysqli_query($connect,$sql);
         if($result->num_rows>0){
@@ -24,7 +25,7 @@
     if(isset($_POST['regster'])){
         $username = $_POST['username'];
         $email = $_POST['email'];
-        $pass = $_POST['pass'];
+        $pass = md5($_POST['pass']);
         $about = $_POST['about'];
         $sql1 = "select * from users where name='$username';";
         $result1=mysqli_query($connect, $sql1);
@@ -290,6 +291,7 @@ width: 320px;
 <!--    })-->
 <!---->
 <!--</script>-->
+
 </body>
 
 </html>

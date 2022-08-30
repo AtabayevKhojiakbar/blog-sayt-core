@@ -160,9 +160,6 @@
 </div>
 <!-- /.container -->
 
-
-
-
 <!-- Bootstrap core JavaScript
     ================================================== -->
 
@@ -171,6 +168,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Swal.fire({
+    //     title: '<strong>Rostdanam o\'chirasanmi</strong>',
+    //     icon: 'info',
+    //     showCloseButton: true,
+    //     showCancelButton: true,
+    //     focusConfirm: false,
+    //     confirmButtonColor:'#ff0000',
+    //     confirmButtonText:
+    //         'Ha!',
+    //     confirmButtonAriaLabel: 'Thumbs up, great!',
+    //     cancelButtonText:
+    //         'Yo\'q',
+    //     cancelButtonAriaLabel: 'Thumbs down'
+    // })
+</script>
 </body>
 </html>
 

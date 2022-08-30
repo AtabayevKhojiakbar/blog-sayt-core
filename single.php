@@ -5,7 +5,9 @@ if(isset($_GET['id'])){
     $sql = "select posts.title, posts.text,posts.img, posts.created_at, posts.view, users.name, users.about from posts inner join users on posts.user_id=users.id where posts.id='$id';";
     $result = mysqli_query($connect,$sql);
     $array = $result->fetch_assoc();
-//    $str = explode(".",$array['text']);
+    $view = $array['view']+1;
+    $sql1 = "update posts set view='$view' where id='$id'";
+    $result1 = mysqli_query($connect, $sql1);
     $text = [];
     $k=0; $m=0;
     for($i=0;$i<strlen($array['text']);$i++){
@@ -16,6 +18,19 @@ if(isset($_GET['id'])){
             $m=$i+2;
         }
     }
+}
+
+if(isset($_POST['submit'])){
+    $name=$_POST['name'];
+    $comment=$_POST['comment'];
+    $query="select id from users where name='$name'";
+    $result = mysqli_query($connect, $query);
+    $result = mysqli_fetch_assoc($result);
+    $idd=$result['id'];
+    $sql = "insert into comments(post_id, user_id, comment) values ('$id', '$idd', '$comment')";
+    $cnt = mysqli_query($connect, $sql);
+    $n=1;
+    $message = "Comment qoldirildi!";
 }
 ?>
 
@@ -33,6 +48,8 @@ if(isset($_GET['id'])){
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -123,6 +140,48 @@ if(isset($_GET['id'])){
             </div>
             <!-- End Post Content -->
 
+            <!--       begin     commit-->
+            <div class="container">
+                <button type="button" class="btn btn-outline-primary" style="margin-left: 87%; margin-bottom: 3px" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Comments
+                </button>
+                <div class="card">
+                    <h4>Comments</h4><br>
+                    <?php
+                    if(!isset($_GET['bb'])){
+                        $query="select comments.comment, comments.datetime, users.name from comments inner join users on users.id=comments.user_id where comments.post_id='$id' order by comments.id desc limit 5";
+                        $res=mysqli_query($connect, $query);
+                        while ($col=mysqli_fetch_assoc($res)){
+                    ?>
+                    <div class=" w-75">
+                        <h4><?=$col['comment']?></h4>
+                        <p>
+                            <img style="width: 40px; height: 35px" class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Name"><span class="m-1"><?=$col['name']?></span><?=$col['datetime']?>
+                        </p>
+
+                    </div>
+                    <?php  } ?>
+
+                    <a href="?id=<?=$id?>&bb=barcha" class="btn btn-success">Barchasini ko`rish</a> <?php }?>
+                    <?php
+                    if(isset($_GET['bb'])){
+                        $query="select comments.comment, comments.datetime, users.name from comments inner join users on users.id=comments.user_id where comments.post_id='$id' order by comments.id desc";
+                        $res=mysqli_query($connect, $query);
+                        while ($col=mysqli_fetch_assoc($res)){
+                            ?>
+                            <div class=" w-75">
+                                <h4><?=$col['comment']?></h4>
+                                <p>
+                                    <img style="width: 40px; height: 35px" class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Name"><span class="m-1"><?=$col['name']?></span><?=$col['datetime']?>
+                                </p>
+
+                            </div>
+                        <?php  }  ?>
+                    <a href="?id=<?=$id?>" class="btn btn-success">Qisqatirish</a> <?php }?>
+
+                </div>
+            </div>
+
         </div>
         <!-- End Post -->
 
@@ -130,6 +189,38 @@ if(isset($_GET['id'])){
 </div>
 <!-- End Article
 ================================================== -->
+<!-- Button to Open the Modal -->
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Comment qoldirish</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="" method="post">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name">
+                    <label>Comment...</label>
+                    <textarea class="form-control" name="comment"></textarea>
+                    <input type="hidden" name="id" value="<?=$id?>">
+                    <button type="submit" class="btn btn-success" style="margin-left: 87%; margin-top: 3px" name="submit">Send</button>
+                </form>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<!--end modal-->
 
 <div class="hideshare"></div>
 
@@ -191,12 +282,15 @@ if(isset($_GET['id'])){
 
             <!-- end post -->
 
+
+
+
         </div>
     </div>
 </div>
 <!-- End Related Posts
 ================================================== -->
-
+<button id="btn">Click!</button>
 
 <!-- Begin AlertBar
 ================================================== -->
@@ -213,23 +307,31 @@ if(isset($_GET['id'])){
 <?php include "footer.php" ?>
 <!-- End Footer
 ================================================== -->
-<!--<h1>-->
-<!--    --><?php
-//    $numbers = range(1, 20);
-//    shuffle($numbers);
-//    echo "<pre>";
-//    print_r($numbers);
-//    echo "</pre>";
-//    ?>
-<!--</h1>-->
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+
+
+<script src="js/sweetalert2.all.min.js"></script>
+<script src="js/jquery-3.6.1.min.js"></script>
+<?php if(isset($n)){ ?>
+<script>
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '<?=$message?>',
+        showConfirmButton: false,
+        timer: 1500
+    })
+</script>
+<?php } ?>
 <script src="assets/js/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="assets/js/mediumish.js"></script>
+
 </body>
 </html>
 

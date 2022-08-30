@@ -56,11 +56,12 @@ if (isset($_POST['submit'])){
     <form action="" method="post">
         <div class="mb-3 mt-3">
             <label>Title:</label>
-            <input class="form-control" rows="5" id="comment" required name="title"></input>
+            <input type="text" class="form-control" rows="5" id="title" required name="title">
+            <input type="file" class="form-control" rows="5" id="comment" required >
         </div>
         <div class="mb-3 mt-3">
             <label >Img:</label>
-            <input class="form-control" rows="5" id="comment" required name="img"></input>
+            <input class="form-control" rows="5" id="comment" required name="img">
         </div>
         <div class="mb-3 mt-3">
             <label for="comment">Text:</label>
@@ -95,10 +96,12 @@ if (isset($_POST['submit'])){
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="assets/js/mediumish.js"></script>
+
 </body>
 </html>
